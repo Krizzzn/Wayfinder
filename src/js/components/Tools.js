@@ -22,12 +22,12 @@ export default class Layout extends React.Component {
   	const dropNodes = tools.dropNodes ? 'active btn-primary' : ''
   	const selectPathMode = tools.selectPathMode ? 'active btn-primary' : ''
 
-    return <div class="panel panel-default">
-      		<div class="panel-body">
-      			<button type="button" className={'btn btn-default ' + snapActive} onClick={this.toggleTools.bind({me: this, tool: 'snap'})}>Snap to grid</button>
-      			<button type="button" className={'btn btn-default ' + dropNodes} onClick={this.toggleTools.bind({me: this, tool: 'dropNodes'})}>Place nodes</button>
-      			<button type="button" className={'btn btn-default ' + selectPathMode} onClick={this.toggleTools.bind({me: this, tool: 'selectPathMode'})}>Split Paths Mode</button>
+    return <div class="topFloatForm">
+      			<button type="button" className={'btn btn-default ' + snapActive} onClick={this.toggleTools.bind({me: this, tool: 'snap'})}>Snap to grid (<kbd>x</kbd> or <kbd>z</kbd>)</button>
+            &nbsp;
+      			<button type="button" className={'btn btn-default ' + dropNodes} onClick={this.toggleTools.bind({me: this, tool: 'dropNodes'})}>Place nodes (<kbd>y</kbd>)</button> 
+            &nbsp;
+      			<button type="button" className={'btn btn-default ' + selectPathMode} onClick={this.toggleTools.bind({me: this, tool: 'selectPathMode'})}>Paths Mode (<kbd>s</kbd>)</button>
 			</div>
-    </div>
   }
 }
