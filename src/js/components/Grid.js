@@ -4,8 +4,6 @@ const Raphael = require('raphael');
 
 import { connect } from "react-redux"
 
-import WaypointMeta from "./WaypointMeta"
-
 import { clickedPlan, selectWaypoint, selectPath, splitPath } from "../actions/floorplanActions"
 import { keypressed } from "../actions/keyboardActions"
 
@@ -81,8 +79,12 @@ export default class Grid extends React.Component{
 
         points.forEach(function(p) {
             var circle = paper.circle(p.x, p.y, (p === last) ? 12 : 9);    
-            circle.attr("fill", (tools.dropNodes) ? "#f00" : "#000");
+            circle.attr("fill", (tools.dropNodes) ? "#D4A76A" : "#553100");
             circle.attr("stroke", "#fff");
+
+            if (!!p.type){
+                circle.attr({"stroke-width":4, "stroke": "#FFDBAA"});
+            }
         });
 
         paths.forEach(function(p) {
@@ -98,7 +100,6 @@ export default class Grid extends React.Component{
         return <div className="canvas">
                     {this.props.children}
                     <div ref="paper" onClick={this.floorplanClicked.bind(this)}></div>
-                    <WaypointMeta point={this.props.last}/>
                </div>
     }
 }

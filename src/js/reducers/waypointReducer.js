@@ -31,6 +31,20 @@ export default function reducer(state={
           lastWaypoint: waypoint
         }
       }
+      case "UPDATE_WAYPOINT":{
+        const updatedWaypoint = action.payload;
+        const updatedState = {...state,
+          lastWaypoint: null,
+          waypoints: [...state.waypoints]
+        };
+
+        var wp = updatedState.waypoints.find(wp => (wp.x === updatedWaypoint.x && wp.y === updatedWaypoint.y));
+        wp.type = updatedWaypoint.type;
+        wp.roomName = updatedWaypoint.roomName;
+        updatedState.lastWaypoint = wp;
+
+        return updatedState;
+      }
       case "SELECTED_WAYPOINT": {
 
         var waypoint = action.payload.waypoint;

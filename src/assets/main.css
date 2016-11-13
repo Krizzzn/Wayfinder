@@ -15,12 +15,14 @@
 	z-index: 1;
 }
 
-.boom{
-
+.rightFloatForm{
+	background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	padding: 25px;
+	padding-top: 10px;
 	position: fixed;
-	top: 50%;
-	left: 50%;
-	height: 100px;
-	width: 100px;
+	top: 50px;
+	right: 0px;
 	z-index: 100;
 }
+
