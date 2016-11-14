@@ -26,7 +26,7 @@ class WaypointLinks extends React.Component {
 
     const { links, value, onChange, input } = this.props;
 
-    const linksTo = input.value.map(pid => {
+    const linksTo = (input.value||[]).map(pid => {
       const p = links.find(ln => ln.id === pid);
       return <div>{p.floor} - {p.roomName}</div>});
 
@@ -34,7 +34,7 @@ class WaypointLinks extends React.Component {
 
     return (
           <div class="form-group">
-            <label htmlFor="linkTo">Link to</label>
+            <label htmlFor="linkTo">Link to other Floorplan</label>
             <select name="linkTo" component="select" class="form-control" onChange={this.handleChange}>
               <option value="">---</option>
               {linkOptions}
