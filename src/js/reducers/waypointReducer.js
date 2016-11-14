@@ -51,7 +51,7 @@ export default function reducer(state={
         var wp = updatedState.waypoints.find(wp => (wp.x === updatedWaypoint.x && wp.y === updatedWaypoint.y));
         wp.type = updatedWaypoint.type;
         wp.roomName = updatedWaypoint.roomName;
-        wp.linkTo = updatedWaypoint.linkTo;
+        wp.links = updatedWaypoint.links;
         updatedState.lastWaypoint = wp;
 
         return updatedState;
