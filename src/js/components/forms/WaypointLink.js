@@ -28,7 +28,10 @@ class WaypointLinks extends React.Component {
 
     const linksTo = (input.value||[]).map(pid => {
       const p = links.find(ln => ln.id === pid);
-      return <div>{p.floor} - {p.roomName}</div>});
+      return <li class="list-group-item">
+                {p.floor} - {p.roomName} 
+                <a href="javascript:void(0)" onClick={() => input.onChange([...input.value].filter(f => f !== pid))}><span class="glyphicon glyphicon-trash"></span></a>
+             </li>});
 
     var linkOptions = links.map(p => <option value={p.id} key={p.id}>{p.floor} - {p.roomName}</option>);
 
@@ -39,8 +42,11 @@ class WaypointLinks extends React.Component {
               <option value="">---</option>
               {linkOptions}
             </select>
-            {this.state.link && <button type="button" class="btn btn-default" onClick={() => input.onChange([...input.value, this.state.link])}>add link</button>}
-            {linksTo}
+            {this.state.link && <button type="button" class="btn btn-default btn-block" onClick={() => input.onChange([...input.value, this.state.link])}>add link</button>}
+            <br/>
+            <ul class="list-group">
+              {linksTo}
+            </ul>
           </div>
     );
   }

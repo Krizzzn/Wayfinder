@@ -29,7 +29,7 @@ class WaypointMetaForm extends Component {
 
           {isPortal && <Field name="links" component={WaypointLinks} links={links}/>}
 
-          <button type="submit" class="btn btn-default" disabled={pristine || submitting}>Submit</button>
+          <button type="submit" class="btn btn-primary" disabled={pristine || submitting}>Submit</button>
         </form>
     );
   }
