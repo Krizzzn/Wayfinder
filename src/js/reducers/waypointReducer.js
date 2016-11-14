@@ -1,9 +1,19 @@
 export default function reducer(state={
     waypoints: [
       {x: 100, y: 100},
-      {x: 100, y: 200},
+      {x: 100, y: 200, type: "Stair", roomName: "boombab", links: [134, 135]},
     ],
-    lastWaypoint: null
+    lastWaypoint: null,
+    links: [
+      {roomName: "Room A", floor: "Floor 1", id: 134},
+      {roomName: "Room B", floor: "Floor 1", id: 135},
+      {roomName: "Room C", floor: "Floor 1", id: 136},
+      {roomName: "Room D", floor: "Floor 1", id: 137},
+
+      {roomName: "Room A", floor: "Floor 2", id: 353},
+      {roomName: "Room B", floor: "Floor 2", id: 373},
+      {roomName: "Room C", floor: "Floor 2", id: 313},
+    ]
   }, action) {
 
     switch (action.type) {
@@ -41,6 +51,7 @@ export default function reducer(state={
         var wp = updatedState.waypoints.find(wp => (wp.x === updatedWaypoint.x && wp.y === updatedWaypoint.y));
         wp.type = updatedWaypoint.type;
         wp.roomName = updatedWaypoint.roomName;
+        wp.linkTo = updatedWaypoint.linkTo;
         updatedState.lastWaypoint = wp;
 
         return updatedState;
