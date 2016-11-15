@@ -1,7 +1,7 @@
 export default function reducer(state={
     waypoints: [
-      {x: 100, y: 100},
-      {x: 100, y: 200, type: "Stair", roomName: "boombab", links: [134, 135]},
+      {id: 1, floor: "Floor 1", x: 100, y: 100},
+      {id: 2, floor: "Floor 1", x: 100, y: 200, type: "Stair", roomName: "boombab", links: [134, 135]},
     ],
     lastWaypoint: null,
     links: [
