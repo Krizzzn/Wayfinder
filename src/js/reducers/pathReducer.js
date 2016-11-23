@@ -1,9 +1,12 @@
 export default function reducer(state={
     paths: [
-
+      {fromId: 1, toId: 2}
     ],
     lastPath: null
   }, action) {
+
+    var findPath = (path1, path2) => Math.max(path1.fromId, path1.toId) === Math.max(path2.fromId, path2.toId) &&
+                                     Math.min(path1.fromId, path1.toId) === Math.min(path2.fromId, path2.toId);
 
     switch (action.type) {
       case "CHANGE_FLOORPLAN":{
@@ -25,15 +28,14 @@ export default function reducer(state={
         if (waypoint){
           return {
             ...state,
-            paths: state.paths.filter(p => !((p.to.x === waypoint.x && p.to.y === waypoint.y) || (p.from.x === waypoint.x && p.from.y === waypoint.y))),
+            paths: state.paths.filter(p => !((p.fromId === waypoint.id) || (p.toId === waypoint.id))),
             lastPath: null
           };
         }
         else if(path){
           return {
             ...state,
-            paths: [...state.paths].filter(p => !((p.from.x === path.from.x && p.from.y === path.from.y) && 
-                                                  (p.to.x   === path.to.x &&   p.to.y   === path.to.y))),
+            paths: [...state.paths].filter(p => !findPath(p, path)),
             lastPath: null
           };
        }
@@ -46,8 +48,8 @@ export default function reducer(state={
         if (!action.payload.lastWaypoint)
           break;
 
-        const path = {to: action.payload.waypoint, 
-                      from: action.payload.lastWaypoint}
+        const path = {fromId: Math.min(action.payload.waypoint.id, action.payload.lastWaypoint.id), 
+                      toId:   Math.max(action.payload.waypoint.id, action.payload.lastWaypoint.id)}
 
         return {
           ...state,
@@ -56,16 +58,14 @@ export default function reducer(state={
         };
       }
       case "SELECT_PATH": {
-        console.log('adasdads')
+
         if (!action.payload.path)
           break;
 
         const pathToSelect = action.payload.path;
 
+        var path = state.paths.find(p => findPath(p, pathToSelect));
 
-        var path = state.paths.find(p => ((p.from.x === pathToSelect.from.x && p.from.y === pathToSelect.from.y) && 
-                                           (p.to.x   === pathToSelect.to.x &&   p.to.y   === pathToSelect.to.y)));
-        console.log(path);
         return {
           ...state,
           lastPath: path
@@ -77,18 +77,17 @@ export default function reducer(state={
           break;
 
         const pathToRemove = action.payload.path;
-        const wp = action.payload.waypoint;
+        const wp = action.lastPoint;
 
-        var paths = [...state.paths].filter(p => !((p.from.x === pathToRemove.from.x && p.from.y === pathToRemove.from.y) && 
-                                                   (p.to.x   === pathToRemove.to.x &&   p.to.y   === pathToRemove.to.y)));
+        var paths = [...state.paths].filter(p => !findPath(p, pathToRemove));
 
-        const lastPath = {from: wp, to: pathToRemove.to}
-        paths = [...paths, lastPath, {to: wp, from: pathToRemove.from}]
+        const lastPath = {fromId: wp.id, toId: pathToRemove.toId}
+        paths = [...paths, lastPath, {toId: wp.id, fromId: pathToRemove.fromId}]
 
         return {
           ...state,
           paths: paths,
-          lastPath: lastPath
+          lastPath: null//lastPath
         };
       }
   }

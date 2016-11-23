@@ -72,7 +72,7 @@ export default function reducer(state={
 
         return {
           ...state,
-          waypoints: state.waypoints.filter(wp => !(wp.x === waypoint.x && wp.y === waypoint.y)),
+          waypoints: state.waypoints.filter(wp => !(wp.id === waypoint.id)),
           lastWaypoint: null
         };
       }

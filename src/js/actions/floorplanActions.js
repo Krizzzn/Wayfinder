@@ -51,16 +51,14 @@ export function clickedPlan(event) {
     }
   }
 
-export function selectWaypoint(circle, shift) {
+export function selectWaypoint(selectedWp, shift) {
 
   return (dispatch, getState) => {
 
     var rect = event.target.getBoundingClientRect();
-    const {waypoint} = getState();   
-    var clickLocation = {x: circle.cx.baseVal.value,
-                         y: circle.cy.baseVal.value};
+    const {waypoint} = getState();
 
-    var found = waypoint.waypoints.find(wp => Math.abs(wp.x - clickLocation.x) < 1 && Math.abs(wp.y - clickLocation.y) < 1);
+    var found = waypoint.waypoints.find(wp => wp.id == selectedWp.id);
     if (!found)
       return;
 
@@ -73,14 +71,10 @@ export function selectWaypoint(circle, shift) {
     }
 }
 
-export function selectPath(path) {
+export function selectPath(pathToSelect) {
 
   return (dispatch, getState) => {
 
-    var pathToSelect = {
-      from: {x: path.pathSegList.getItem(0).x, y: path.pathSegList.getItem(0).y},
-      to:   {x: path.pathSegList.getItem(1).x, y: path.pathSegList.getItem(1).y}
-    };
 
     dispatch({type: "DESELECT"});
 
@@ -101,10 +95,7 @@ export function splitPath(path, event) {
     var clickLocation = {x: Math.round(event.clientX - rect.left),
                          y: Math.round(event.clientY - rect.top)};
 
-    var pathToRemove = {
-      from: {x: path.pathSegList.getItem(0).x, y: path.pathSegList.getItem(0).y},
-      to:   {x: path.pathSegList.getItem(1).x, y: path.pathSegList.getItem(1).y}
-    };
+    var pathToRemove = path;
 
     dispatch({
       type: "CREATE_WAYPOINT",

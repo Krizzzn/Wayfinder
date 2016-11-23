@@ -27,19 +27,27 @@ export default class Grid extends React.Component{
         };
       }
 
-    floorplanClicked(event) {
+    getSelectedRaphaelObject(event, type){
+        const raphaelObject = this.state.paper.getById(event.target.raphaelid);
+        const floorplanObject = raphaelObject.data(type);
+        return {...floorplanObject};
+    }
 
+    floorplanClicked(event) {
 
         switch(event.target.tagName){
             case "svg":
                 return this.props.dispatch(clickedPlan(event));
             case "circle":
-                return this.props.dispatch(selectWaypoint(event.target, event.shiftKey));
+                const wp = this.getSelectedRaphaelObject(event, 'waypoint');
+                return this.props.dispatch(selectWaypoint(wp, event.shiftKey));
             case "path":
                 if (this.props.tools.selectPathMode){
+                    const path = this.getSelectedRaphaelObject(event, 'path');
+
                     if (event.shiftKey)
-                        return this.props.dispatch(splitPath(event.target, event));
-                    return this.props.dispatch(selectPath(event.target));
+                        return this.props.dispatch(splitPath(path, event));
+                    return this.props.dispatch(selectPath(path));
                 }
             default:{
                 console.log(event.target.tagName);
@@ -77,18 +85,24 @@ export default class Grid extends React.Component{
 
         paper.clear();
 
+        var wpIndex = {};
         points.forEach(function(p) {
-            var circle = paper.circle(p.x, p.y, (p === last) ? 12 : 9);    
+            var circle = paper.circle(p.x, p.y, (!!last && p.id === last.id) ? 12 : 9);    
             circle.attr("fill", (tools.dropNodes) ? "#D4A76A" : "#553100");
             circle.attr("stroke", "#fff");
+            circle.data('waypoint', {...p});
 
             if (!!p.type){
                 circle.attr({"stroke-width":4, "stroke": "#FFDBAA"});
             }
+
+            wpIndex[p.id] = p;
         });
 
         paths.forEach(function(p) {
-            var path = paper.path( ["M", p.from.x, p.from.y, "L", p.to.x, p.to.y ] );
+            var path = paper.path( ["M", wpIndex[p.fromId].x, wpIndex[p.fromId].y, "L", wpIndex[p.toId].x, wpIndex[p.toId].y ] );
+            path.data('path', {...p});
+
             if (p == lastPath)
                 path.attr("stroke", "#00f");
             if (tools.selectPathMode)

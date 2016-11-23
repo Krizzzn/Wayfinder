@@ -18,6 +18,9 @@ export default store => next => action => {
   		break;
   	case "CREATE_WAYPOINT":
     case "CLICKED_FLOORPLAN":
+    	if (!!action.payload.waypoint.id)
+    		break;
+
     	action.payload.waypoint = {...action.payload.waypoint, id: nextId(store) }
     	break;
   }
