@@ -5,7 +5,7 @@ const Raphael = require('raphael');
 import { connect } from "react-redux"
 
 import { clickedPlan, selectWaypoint, selectPath, splitPath } from "../actions/floorplanActions"
-import { keypressed } from "../actions/keyboardActions"
+import { registerKeyboardHandler } from "../actions/keyboardActions"
 
 
 @connect((store) => {
@@ -61,17 +61,8 @@ export default class Grid extends React.Component{
     }
 
     componentWillMount(){
-        const that = this;
-        document.addEventListener("keyup", function(){
-            switch (event.target.tagName.toLowerCase()){
-                case "input":
-                case "textarea":
-                case "select":
-                    return true;
-            }
-            that.props.dispatch(keypressed(event.keyCode));
-            return false;
-        }, false);
+
+      registerKeyboardHandler(document, this);
     }
 
     componentDidUpdate() {

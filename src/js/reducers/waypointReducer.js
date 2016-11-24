@@ -76,6 +76,20 @@ export default function reducer(state={
           lastWaypoint: null
         };
       }
+      case "MOVE":{
+        const move = action.payload;
+        const waypoint = action.lastPoint;
+        if (!waypoint)
+          break;
+
+        const wps = state.waypoints.filter(wp => !(wp.id === waypoint.id));
+        const moved = {...waypoint, x: waypoint.x + move.x, y: waypoint.y + move.y};
+        return {
+          ...state,
+          waypoints: [...wps, moved],
+          lastWaypoint: moved
+        };
+      }
   }
 
     return state;
