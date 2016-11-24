@@ -1,5 +1,11 @@
 # Wayfinder.Mapper
 
+## Development
+
 `npm run dev`
 
-`http://localhost:8080`
+then open `http://localhost:8080` in Browser and hack.
+
+## Build
+
+`npm run build`

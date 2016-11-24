@@ -30,6 +30,7 @@
   "devDependencies": {},
   "scripts": {
     "dev": "./node_modules/.bin/webpack-dev-server --content-base src --inline --hot",
+    "build": "./node_modules/.bin/webpack -p --define process.env.NODE_ENV='\"production\"' --progress --colors",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
