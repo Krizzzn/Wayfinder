@@ -3,11 +3,14 @@ import { connect } from "react-redux"
 
 import { toggleTool } from "../actions/toolsActions";
 import { changeFloorplan } from "../actions/floorplanActions";
+import { postDataToApi } from "../actions/apiActions";
 
 @connect((store) => {
   return {
     tools:     store.tools,
-    floorplan: store.floorplan
+    floorplan: store.floorplan,
+    waypoints: store.waypoint.waypoints,
+    paths:     store.waypoint.paths
   };
 })
 
@@ -19,6 +22,10 @@ export default class Layout extends React.Component {
 
   toggleFloorPlan(event){
     this.props.dispatch(changeFloorplan(event.target.value));
+  }
+
+  save(){
+    this.props.dispatch(postDataToApi(this.props.waypoints, this.props.paths));
   }
 
   render() {
@@ -43,6 +50,10 @@ export default class Layout extends React.Component {
             |
             &nbsp;
             <select class="form-control" onChange={this.toggleFloorPlan.bind(this)}>{floorOptions}</select>
+            &nbsp;
+            |
+            &nbsp;
+            <button type="button" className={'btn btn-primary'} onClick={this.save.bind(this)}>save data</button>
 			</div>
   }
 }
