@@ -7,14 +7,19 @@ const { DOM: { input } } = React
 
 class WaypointMetaForm extends Component {
   render() {
-    const { handleSubmit, deleteButtonClicked, typeValue, isConfigurable, isPortal, links, pristine, submitting } = this.props;
+    const { handleSubmit, deleteButtonClicked, typeValue, isConfigurable, isPortal, coordinates, links, pristine, submitting } = this.props;
 
     return (
         <form onSubmit={handleSubmit}>
           <h4 class="text-uppercase">Node{(typeValue) && ": " + typeValue}</h4>
+          <p>{coordinates}</p>
           {isConfigurable && <div class="form-group">
             <label htmlFor="roomName">Room Name</label>
             <Field name="roomName" component="input" type="text" className="form-control"/>
+          </div>}
+          {typeValue && <div class="form-group">
+            <label htmlFor="roomDescription">Room Description</label>
+            <Field name="roomDescription" component="input" type="text" className="form-control"/>
           </div>}
           <div class="form-group">
             <label htmlFor="type">Waypoint Type</label>
@@ -47,14 +52,16 @@ WaypointMetaForm = connect(
   state => {
 
     const typeValue = selector(state, 'type');
-
     const isConfigurable = (!!typeValue); 
     const isPortal = ["Stair", "Elevator"].includes(typeValue);
+    const coordinates = Math.floor(selector(state, 'x')) + 'x' + Math.floor(selector(state, 'y'));
+
   
     return {
       typeValue,
       isConfigurable,
-      isPortal
+      isPortal,
+      coordinates
     }
   }
 )(WaypointMetaForm)
