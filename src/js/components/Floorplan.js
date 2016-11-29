@@ -24,18 +24,5 @@ export default class Floorplan extends React.Component {
     const file = "assets/floorplans/"+this.props.file;
 
     return <div><img src={file} style={{width: '100%'}}/></div>
-
-    const buttons = this.props.floors.map((m,i) => <button type="button" key={'floors_'+i} class="btn btn-default" onClick={this.changeFloorplan.bind({me: this, file: m.file})}>{m.name}</button> )
-
-    return <div class="col-md-12">
-      <div class="col-md-8">
-        <img src={file} style={{width: '100%'}}/>
-      </div>
-      <div class="col-md-4">
-        <div class="btn-group" role="group">
-          {buttons}  
-        </div>
-      </div>
-    </div>
   }
 }

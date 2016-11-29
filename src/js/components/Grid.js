@@ -76,15 +76,18 @@ export default class Grid extends React.Component{
 
         paper.clear();
 
+
+console.log(points)
+
         var wpIndex = {};
         points.forEach(function(p) {
-            var circle = paper.circle(p.x, p.y, (!!last && p.id === last.id) ? 12 : 9);    
+            var circle = paper.circle(p.x, p.y, (!!last && p.id === last.id) ? '0.6em' : '0.3em');    
             circle.attr("fill", (tools.dropNodes) ? "#D4A76A" : "#553100");
             circle.attr("stroke", "#fff");
             circle.data('waypoint', {...p});
 
             if (!!p.type){
-                circle.attr({"stroke-width":4, "stroke": "#FFDBAA"});
+                circle.attr({"stroke-width":'0.2em', "stroke": "#FFDBAA"});
             }
 
             wpIndex[p.id] = p;
@@ -97,7 +100,7 @@ export default class Grid extends React.Component{
             if (p == lastPath)
                 path.attr("stroke", "#00f");
             if (tools.selectPathMode)
-                path.attr({"stroke-width":8});
+                path.attr({"stroke-width":'0.5em'});
         })
     }
 

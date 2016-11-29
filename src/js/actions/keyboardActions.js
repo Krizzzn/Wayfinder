@@ -48,6 +48,7 @@ export function keypressed(keyCode, event) {
 
   switch(keyCode){
     case 8:   // BACKSPACE
+    case 46:  // DELETE
     	return {type: 'RETRACT'};
     case 68:  // d
       return {type: 'DESELECT'};
